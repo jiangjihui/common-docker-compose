@@ -1,0 +1,9 @@
+nginx:
+        image: nginx
+        ports:
+                - "8081:8081"
+                - "445:443"
+        volumes:
+                - ./conf:/etc/nginx
+                - ./html:/usr/share/nginx/html
+                - ./log:/var/log/nginx
