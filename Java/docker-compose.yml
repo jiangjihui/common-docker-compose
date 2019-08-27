@@ -9,7 +9,9 @@ services:
         environment:
             TZ: Asia/Shanghai
         volumes:
+            # 时区同步
             - /etc/localtime:/etc/localtime:ro
+            # 应用存放目录
             - ./app:/app
         ports:
             - "18610:8084"
