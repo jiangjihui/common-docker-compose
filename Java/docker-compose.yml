@@ -1,0 +1,16 @@
+version: '2'
+services:
+    java:
+        image: openjdk:8-jdk-alpine
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "1g"
+        environment:
+            TZ: Asia/Shanghai
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - ./app:/app
+        ports:
+            - "18610:8084"
+        command: java -jar /app/app.jar
