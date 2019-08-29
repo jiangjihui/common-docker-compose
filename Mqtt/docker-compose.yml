@@ -1,0 +1,14 @@
+version: '2'
+services:
+    mqtt:
+        image: eclipse-mosquitto
+        environment:
+            TZ: Asia/Shanghai
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - ./config:/mosquitto/config
+            - ./data:/mosquitto/data
+            - ./log:/mosquitto/log
+        ports:
+            - "1883:1883"
+            - "19001:9001"

@@ -1,0 +1,62 @@
+## 参考：https://blog.csdn.net/soongp/article/details/66974529
+## 参考：https://blog.csdn.net/u011984312/article/details/85124276
+version: '2'
+services:
+    # influxDB 数据库，存储监测数据
+    influxdb:
+        image: influxdb
+        # container_name: influxdb
+        environment:
+            INFLUXDB_ADMIN_ENABLED: "true"
+            INFLUXDB_ADMIN_USER: "root"
+            INFLUXDB_ADMIN_PASSWORD: "root"
+            INFLUXDB_DB: mytest
+        volumes:
+            - ./influxdb/data:/var/lib/influxdb
+        ports:
+            - "8086:8086"
+
+    # 收集器：收集docker/mqtt/系统信息 等数据存入influxDB中，其在telegraf.conf配置
+    telegraf:
+        image: telegraf
+        environment:
+            TZ: Asia/Shanghai
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - /var/run/docker.sock:/var/run/docker.sock
+            - ./telegraf.conf:/etc/telegraf/telegraf.conf
+        depends_on:
+            - influxdb
+    
+    # 无需建立容器链接，在应用界面中进行配置（influxDB）
+    chronograf:
+        image: chronograf
+        environment:
+            TZ: Asia/Shanghai
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - ./chronograf:/var/lib/chronograf
+        depends_on:
+            - influxdb
+            - telegraf
+        ports:
+            - "8888:8888"
+
+    # Kapacitor提供警报并检测时间序列数据中的异常，并提供数据分析与机器学习接口，开放接口给chronograf使用
+    kapacitor:
+        image: kapacitor
+        environment:
+            - TZ=Asia/Shanghai
+            - KAPACITOR_HOSTNAME=kapacitor
+            - KAPACITOR_LOGGING_LEVEL=INFO
+            - KAPACITOR_REPORTING_ENABLED=false
+            - KAPACITOR_INFLUXDB_0_URLS_0=http://192.168.1.103:8086
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - ./kapacitor:/var/lib/kapacitor
+        depends_on:
+            - influxdb
+            - telegraf
+            - chronograf
+        ports:
+            - "29092:9092"
