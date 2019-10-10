@@ -1,13 +1,13 @@
 version: '2'
 services:
     tm:
-        image: tomcat
+        image: tomcat:8.5.46
         environment:
             TZ: Asia/Shanghai
         volumes:
             - ./webapps:/usr/local/tomcat/webapps/
-            - ./conf:/usr/local/tomcat/conf/
-            - ./bin/catalina.sh:/usr/local/tomcat/bin/catalina.sh 
+#            - ./conf:/usr/local/tomcat/conf/
+#            - ./bin/catalina.sh:/usr/local/tomcat/bin/catalina.sh
             - ./logs:/usr/local/tomcat/logs/
             - /etc/localtime:/etc/localtime:ro
         ports:
