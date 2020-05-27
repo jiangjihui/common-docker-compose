@@ -16,4 +16,4 @@ services:
             - ./app:/app
         ports:
             - "18610:8084"
-        command: java -jar /app/app.jar --spring.profiles.active=test
+        command: java -server -jar /app/app.jar --spring.profiles.active=test
