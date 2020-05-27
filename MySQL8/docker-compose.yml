@@ -15,8 +15,8 @@ services:
       - ./conf:/etc/mysql/conf.d
       - ./data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: root
       TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: root
 
   adminer:
     image: adminer:4.7.7-standalone
