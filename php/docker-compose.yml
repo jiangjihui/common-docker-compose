@@ -1,0 +1,19 @@
+# https://www.jianshu.com/p/43037ce40b00
+
+version: '2'
+services:
+    html-nginx:
+            image: nginx:1.18.0
+            ports:
+                    - "10004:80"
+            links:
+                    - php
+            volumes:
+                    - ./conf:/etc/nginx/conf.d
+                    - /mydata1/docker/nginx/default:/usr/share/nginx/html
+                    - ./log:/var/log/nginx
+
+    php:
+            image: php:7.1.30-fpm
+            volumes:
+                    - /mydata1/docker/nginx/default:/www
