@@ -10,10 +10,10 @@ services:
                     - php
             volumes:
                     - ./conf:/etc/nginx/conf.d
-                    - /mydata1/docker/nginx/default:/usr/share/nginx/html
+                    - /www/default:/usr/share/nginx/html
                     - ./log:/var/log/nginx
 
     php:
             image: php:7.1.30-fpm
             volumes:
-                    - /mydata1/docker/nginx/default:/www
+                    - /www/default:/www
