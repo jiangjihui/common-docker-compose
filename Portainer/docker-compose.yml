@@ -1,10 +1,11 @@
 version: '2'
 services:
-        portainer:
-                image: portainer/portainer
-                ports:
-                        - "9001:9000"
-                volumes:
-                        - ./data:/data
-                        - /var/run/docker.sock:/var/run/docker.sock
-                restart: always
+  portainer:
+    image: portainer/portainer-ce:2.0.1
+    ports:
+      - "9001:9000"
+      - "9002:8000"
+    volumes:
+      - ./data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
