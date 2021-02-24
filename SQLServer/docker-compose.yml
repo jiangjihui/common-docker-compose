@@ -1,0 +1,11 @@
+version: '2'
+services:
+        sqlserver2017:
+                image: microsoft/mssql-server-linux:2017-latest
+                volumes:
+                        - ./mssql:/var/opt/mssql
+                ports:
+                        - "1401:1433"
+                environment:
+                        - MSSQL_SA_PASSWORD=sqlserver123!
+                        - ACCEPT_EULA=Y
